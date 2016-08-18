@@ -1,0 +1,8 @@
+<h1>All Products</h1>
+
+<% @products.each do |prod| %>
+  <%= link_to prod.title, product_path(prod) %>
+  <hr>
+<% end %>
+
+<%= will_paginate @products %>

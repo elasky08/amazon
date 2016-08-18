@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Amazon</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+    <%= link_to("Home", root_path) %>
+    <!-- <a href="<%= root_path %>">Home</a> -->
+    |
+    <%= link_to "About", about_path%>
+    <!-- <a href="/about">About</a> -->
+    |
+    <%= link_to "Services", services_path %>
+    |
+    <%= link_to "Contact", contact_path %>
+    |
+    <%= link_to "Create Product", new_product_path %>
+    |
+    <%= link_to "Products", products_path %>
+    <hr>
+    <%= yield %>
+  </body>
+</html>

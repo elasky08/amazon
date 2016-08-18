@@ -1,0 +1,48 @@
+<h1><%= @q.title %></h1>
+<p>
+  <%= @q.description %>
+  <br>
+  <%= number_to_currency(@q.price) %>
+  <br>
+
+  <%= @q.category_name %>
+  <%# @q.category.id %>
+  <%# @q.category.created_at %>
+  <%# @q.category.updated_at %>
+
+  <%# @category.name %>
+</p>
+
+<%= link_to "Edit", edit_product_path(@q) %>
+<%= button_to "Delete", product_path(@q),
+                      method: :delete,
+                      data: {confirm: "Are you sure?"}
+                      %>
+<hr>
+<h2>Create a Review</h2>
+<%= @review.errors.full_messages.join(", ")  %>
+
+<%= form_for [@q, @review] do |f|%>
+<%= f.text_area :body %>
+
+<div>
+<p>How many star do you want to give for this product?</p>
+<%= f.radio_button(:rating,1)%>1
+<%= f.radio_button(:rating,2)%>2
+<%= f.radio_button(:rating,3)%>3
+<%= f.radio_button(:rating,4)%>4
+<%= f.radio_button(:rating,5)%>5
+</div>
+
+<%= f.submit %>
+<% end %>
+
+<h2>Reviews</h2>
+<% @q.reviews.each do |rev| %>
+<%= rev.body %> |
+<%= "rating: #{rev.rating} star/s" %>
+<%= link_to "delete", product_review_path(@q, rev),
+                      method: :delete,
+                      data: {confirm: "Are you sure?"}%>
+<hr>
+<% end %>
