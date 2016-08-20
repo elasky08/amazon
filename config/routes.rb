@@ -10,6 +10,10 @@ Rails.application.routes.draw do
   post "/contact" => "contact#create", as: :create
 
   # resources :products, only: [:new, :create, :edit, :update] #this is for TDD controller
+  resources :users, only: [:new, :create]
+  resources :sessions, only: [:new, :create, :destroy] do
+    delete :destroy, on: :collection
+  end
   resources :products do
     resources :reviews, only: [:create, :destroy]
   end

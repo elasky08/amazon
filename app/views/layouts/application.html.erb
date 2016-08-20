@@ -22,7 +22,20 @@
     <%= link_to "Create Product", new_product_path %>
     |
     <%= link_to "Products", products_path %>
+    |
+    <% if user_signed_in? %>
+      Welcome <%= current_user.full_name %>
+      |
+      <%= link_to "Sign out", sessions_path, method: :delete %>
+    <% else %>
+      <%= link_to "Sign up", new_user_path %>
+      |
+      <%= link_to "Sign in", new_session_path %>
+    <% end %>
     <hr>
+    <div>
+      <%= flash[:notice] || flash[:alert] %>
+    </div>
     <%= yield %>
   </body>
 </html>

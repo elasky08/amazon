@@ -28,12 +28,14 @@ class ProductsController < ApplicationController
   def new
     @product = Product.new
     @category = Category.all
+    # @user = User.all
   end
 
   def create
     product_params = params.require(:product).permit([:title, :description, :price, :category_id])
     @product       = Product.new product_params
-
+    @product.user = current_user
+    # @product       = current_user.products.new product_params
     if @product.save
       redirect_to product_path(@product), notice: "Product created!"
     else

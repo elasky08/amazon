@@ -6,6 +6,10 @@
   <br>
 
   <%= @q.category_name %>
+  <% if @q.user %>
+    <h1>Created by: <%= @q.user.first_name %></h1>
+  <% end %>
+
   <%# @q.category.id %>
   <%# @q.category.created_at %>
   <%# @q.category.updated_at %>
