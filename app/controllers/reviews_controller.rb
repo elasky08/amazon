@@ -1,10 +1,11 @@
 class ReviewsController < ApplicationController
+  before_action :authenticate_user!, only: [:create, :edit, :update, :destroy, :new]
   def create
     @review = Review.new params.require(:review).permit(:body, :rating)
-    @q = Product.find params[:product_id]
-    @review.product = @q
+    @product = Product.find params[:product_id]
+    @review.product = @product
     if @review.save
-      redirect_to product_path(@q), notice: "Review created!"
+      redirect_to product_path(@product), notice: "Review created!"
     else
       flash[:alert] = "Please fix errors below"
       render "/products/show"

@@ -1,8 +1,9 @@
 class ProductsController < ApplicationController
+  before_action :authenticate_user!, only: [:create, :edit, :update, :destroy, :new]
   def show
-    @q = Product.find params[:id]
+    @product = Product.find params[:id]
     @review = Review.new
-    @category = @q.category #Category.find params[@q.category_id]
+    @category = @product.category #Category.find params[@q.category_id]
   end
 
   def index

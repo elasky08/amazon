@@ -1,4 +1,7 @@
 class Product < ApplicationRecord
+  has_many :users, through: :favourites
+  has_many :favourites, dependent: :destroy
+
   belongs_to :user
   has_many :reviews, dependent: :destroy
   belongs_to :category
@@ -28,6 +31,10 @@ class Product < ApplicationRecord
   self.per_page = 10
   WillPaginate.per_page = 10
 
+  def favourite_for(user)
+    favourites.find_by_user_id user
+  end
+
   def prices
     self.price ||= 1
   end
@@ -35,9 +42,5 @@ class Product < ApplicationRecord
   def capitalize
     self.title.capitalize!
   end
-
-  def index
-  end
-
 
 end

@@ -1,0 +1,7 @@
+<h1>My Profile</h1>
+
+<% @user.favourite_products.each do |fave| %>
+<h4><%= fave.title %></h4>
+<%= fave.description %>
+<hr>
+<% end %>
