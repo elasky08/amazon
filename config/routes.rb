@@ -15,6 +15,7 @@ Rails.application.routes.draw do
     delete :destroy, on: :collection
   end
   resources :products do
+    post "/products/search" => "products#search"
     resources :reviews, only: [:create, :destroy] do
       resources :likes, only: [:create, :destroy]
     end

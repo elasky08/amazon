@@ -1,15 +1,23 @@
 class ProductsController < ApplicationController
   before_action :authenticate_user!, only: [:create, :edit, :update, :destroy, :new]
+  PRODUCTS_PER_PAGE = 10
   def show
     @product = Product.find params[:id]
+    @products2 = Product.search(params[:search_term])
+    @products = @products2.order(created_at: :desc).
+                           page(params[:page]).
+                           per(PRODUCTS_PER_PAGE)
     @review = Review.new
     @category = @product.category #Category.find params[@q.category_id]
   end
 
   def index
-    # @products = Product.order(created_at: :desc)
-    @products = Product.latest.paginate(:page => params[:page])
-    # Product.paginate(:page => params[:page], :per_page => 10)
+
+    @products2 = Product.search(params[:search_term])
+    @products = @products2.order(created_at: :desc).
+                           page(params[:page]).
+                           per(PRODUCTS_PER_PAGE)
+    # @products = Product.latest.paginate(:page => params[:page])
   end
 
   def edit

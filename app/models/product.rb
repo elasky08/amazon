@@ -23,13 +23,13 @@ class Product < ApplicationRecord
   #   where(["title ILIKE ? OR description ILIKe ?", "%#{keyword}%", "%#{keyword}%"])
   #   # where(["title ILIKE ? ","%#{keyword}%"])
   # end
-  scope :search, lambda {|keyword| where("title ILIKE ?", "%#{keyword}%") | where("description ILIKE ?", "%#{keyword}%")}
+  # scope :search, lambda {|keyword| where("title ILIKE ?", "%#{keyword}%") | where("description ILIKE ?", "%#{keyword}%")}
 
-  # def self.search(str)
-  #   (where("title ILIKE ?", "%#{str}%").order(title: :asc) + where("description ILIKE ?", "%#{str}%").order(description: :asc)).uniq
-  # end
-  self.per_page = 10
-  WillPaginate.per_page = 10
+  def self.search(search_term)
+    where("title ILIKE ? OR description ILIKE ?", "%#{search_term}%", "%#{search_term}%")
+  end
+  # self.per_page = 10
+  # WillPaginate.per_page = 10
 
   def favourite_for(user)
     favourites.find_by_user_id user
