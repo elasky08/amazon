@@ -1,0 +1,16 @@
+<div id="<%= dom_id(review) %>" class="elaela">
+  <%= review.body %>
+  |
+  <%= "rating: #{review.rating} star/s" %>
+  <%= link_to "delete", product_review_path(@product, review),
+                    method: :delete,
+                    remote: true,
+                    data: {confirm: "Are you sure?"}%>
+
+  <% user_like = review.like_for current_user %>
+  <div class="like">
+    <%= render partial: 'likes/like', locals: { user_like: user_like, review: review }  %>
+  </div>
+  </div>
+  <hr>
+</div>

@@ -1,28 +1,28 @@
 <h1><%= @product.title %></h1>
 <p>
-  <%= @product.description %>
-  <br>
-  <%= number_to_currency(@product.price) %>
-  <br>
+    <%= @product.description %>
+    <br>
+    <%= number_to_currency(@product.price) %>
+    <br>
 
-  <%= @product.category_name %>
-  <% if @product.user %>
-    <h1>Created by: <%= @product.user.first_name %></h1>
-  <% end %>
+    <%= @product.category_name %>
+    <% if @product.user %>
+    <h1>Created by:
+        <%= @product.user.first_name %></h1>
+    <% end %>
 
-  <%# @q.category.id %>
-  <%# @q.category.created_at %>
-  <%# @q.category.updated_at %>
+    <%# @q.category.id %>
+    <%# @q.category.created_at %>
+    <%# @q.category.updated_at %>
 
-  <%# @category.name %>
+    <%# @category.name %>
 </p>
 <% user_favourite = @product.favourite_for current_user %>
-  <% if user_favourite.present? %>
-    <%= link_to "Un-favourite", product_favourite_path(@product, user_favourite), method: :delete %>
-  <% else %>
-    <%= link_to "favourite", product_favourites_path(@product), method: :post %>
-  <% end %>
-
+<% if user_favourite.present? %>
+<%= link_to "Un-favourite", product_favourite_path(@product, user_favourite), method: :delete %>
+<% else %>
+<%= link_to "favourite", product_favourites_path(@product), method: :post %>
+<% end %>
 
 <%= link_to "Edit", edit_product_path(@product) %>
 <%= button_to "Delete", product_path(@product),
@@ -33,34 +33,24 @@
 <h2>Create a Review</h2>
 <%= @review.errors.full_messages.join(", ")  %>
 
-<%= form_for [@product, @review] do |f|%>
+<%= form_for [@product, @review], remote: true do |f|%>
 <%= f.text_area :body %>
 
 <div>
-<p>How many star do you want to give for this product?</p>
-<%= f.radio_button(:rating,1)%>1
-<%= f.radio_button(:rating,2)%>2
-<%= f.radio_button(:rating,3)%>3
-<%= f.radio_button(:rating,4)%>4
-<%= f.radio_button(:rating,5)%>5
+    <p>How many star do you want to give for this product?</p>
+    <%= f.radio_button(:rating,1)%>1
+    <%= f.radio_button(:rating,2)%>2
+    <%= f.radio_button(:rating,3)%>3
+    <%= f.radio_button(:rating,4)%>4
+    <%= f.radio_button(:rating,5)%>5
 </div>
 
 <%= f.submit %>
 <% end %>
 
 <h2>Reviews</h2>
-<% @product.reviews.each do |rev| %>
-<%= rev.body %> |
-<%= "rating: #{rev.rating} star/s" %>
-<%= link_to "delete", product_review_path(@product, rev),
-                      method: :delete,
-                      data: {confirm: "Are you sure?"}%>
-
-<% user_like = rev.like_for current_user %>
-  <% if user_like.present? %>
-    <%= link_to "Un-like", product_review_like_path(@product, rev, user_like), method: :delete  %>
-  <% else %>
-    <%= link_to "like", product_review_likes_path(@product, rev), method: :post  %>
-  <% end %>
-<hr>
-<% end %>
+<div id="reviews">
+    <% @product.reviews.each do |rev| %>
+    <%= render "/reviews/review", review: rev %>
+    <% end %>
+</div>

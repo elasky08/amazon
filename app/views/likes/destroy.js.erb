@@ -1,0 +1,1 @@
+$('#<%= dom_id(@review) %> .like').html('').prepend('<%= j(render('/likes/like', {review: @review, user_like: nil})) %>');
